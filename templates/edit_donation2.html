@@ -1,0 +1,42 @@
+
+
+{% load static %}
+<link  href="{% static 'donationEdit.css' %}" rel="stylesheet">
+
+ 
+
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Donor Name:</label>
+    <input type="text" name="donor_name" value="{{ donation.donor_name }}" required>
+    
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ donation.email }}" required>
+    
+    <label>Phone Number:</label>
+    <input type="text" name="phone_number" value="{{ donation.phone_number }}" required>
+
+    <label>Collection Address:</label>
+    <input type="text" name="collection_address" value="{{ donation.collection_address }}" required>
+
+    <label>Food Category:</label>
+    <input type="text" name="food_category" value="{{ donation.food_category }}" required>
+
+    <label>Quantity:</label>
+    <input type="number" name="quantity" value="{{ donation.quantity }}" required>
+
+    <label>Food Preparation Date:</label>
+    <input type="date" name="food_preparation_date" value="{{ donation.food_preparation_date }}" required>
+
+    <label>Special Note:</label>
+    <textarea name="special_note">{{ donation.special_note }}</textarea>
+
+    <label>Accept Terms:</label>
+    <input type="checkbox" name="accept_terms" {% if donation.accept_terms %}checked{% endif %}>
+
+    <button type="submit">Update Donation</button>
+</form>
+
+  
+

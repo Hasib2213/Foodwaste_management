@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Donation</title>
+    {% load static %}
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+    <link href="{% static 'styles.css' %}" rel="stylesheet"> 
+
+    <style>
+        /* Fixed navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        /* Ensure content does not hide behind navbar */
+        body {
+            padding-top: 70px; /* Adjust according to navbar height */
+        }
+
+
+       /* Ultra-Compact Form Container */
+section {
+    max-width: 320px; /* Further reduced width */
+    background: #f8f9fa;
+    margin: 20px auto; /* Less margin */
+    padding: 10px; /* Minimal padding */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Title */
+h1 {
+    text-align: center;
+    color: #343a40;
+    font-size: 16px; /* Smaller title */
+    margin-bottom: 8px;
+}
+
+/* Form Labels */
+label {
+    font-weight: bold;
+    color: #495057;
+    display: block;
+    margin-top: 5px; /* Less spacing */
+    font-size: 11px; /* Smaller text */
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 5px; /* Minimal padding */
+    margin-top: 2px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    font-size: 11px; /* Smaller text */
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Textarea Resizing */
+textarea {
+    resize: vertical;
+    min-height: 40px; /* Reduced height */
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    margin-right: 3px;
+}
+
+/* Submit Button */
+button {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    font-size: 12px; /* Smaller button text */
+    font-weight: bold;
+    padding: 6px; /* Compact padding */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 8px;
+}
+
+/* Hover Effect */
+button:hover {
+    background: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    section {
+        width: 75%;
+        padding: 8px; /* Less padding */
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Food Waste Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contactsub">Contact</a></li>
+                  <!--   <li class="nav-item"><a class="nav-link" href="/contactview">ContactView</a></li>   -->
+                    <li class="nav-item"><a class="nav-link" href="/Vsub">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Vdon">ViewDonor</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/leaderboard">Leaderboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <h1>Edit Donation</h1>
+        <form id="editDonationForm">
+            <label for="donor_name">Donor Name:</label>
+            <input type="text" id="donor_name" name="donor_name" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required><br><br>
+
+            <label for="collection_address">Collection Address:</label>
+            <textarea id="collection_address" name="collection_address" required></textarea><br><br>
+
+            <label for="food_category">Food Category:</label>
+            <select id="food_category" name="food_category" required>
+                <option value="veg">Vegetarian</option>
+                <option value="non_veg">Non-Vegetarian</option>
+                <option value="both">Both</option>
+            </select><br><br>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required><br><br>
+
+            <label for="food_preparation_date">Food Preparation Date:</label>
+            <input type="date" id="food_preparation_date" name="food_preparation_date" required><br><br>
+
+            <label for="special_note">Special Note:</label>
+            <textarea id="special_note" name="special_note"></textarea><br><br>
+
+            <label for="accept_terms">I accept the terms & conditions:</label>
+            <input type="checkbox" id="accept_terms" name="accept_terms" required><br><br>
+
+            <button type="submit">Update</button>
+        </form>
+    </section>
+     <!-- Footer -->
+     <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 Food Waste Management System. All Rights Reserved.</p>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

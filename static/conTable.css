@@ -1,0 +1,45 @@
+/* General Styles */
+
+
+
+/* Table Styles */
+table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+    border: 2px solid black;
+    background-color: white;
+}
+
+/* Header Styles */
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Header Background */
+th {
+    background-color: #f2f2f2;
+}
+
+/* Alternate Row Coloring */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Link Styles */
+a {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+
+a:hover {
+    color: red;
+}

@@ -1,0 +1,37 @@
+
+{% extends "base.html"%}
+{% block title %}
+  Leaderboard
+{% endblock title %}
+
+{% block content %}
+
+{% endblock content %}
+
+{% block body %}
+{% load static %}
+<link  href="{% static 'leader.css' %}" rel="stylesheet">
+  <section>
+    <h2 style="text-align: center;">🏆 Top Donors Leaderboard 🏆</h2>
+    <table>
+        {% csrf_token %}
+        <tr>
+            <th>Rank</th>
+            <th>Donor Name</th>
+            <th>Total Donated (kg)</th>
+            <th>Reward Level</th>
+        </tr>
+        {% for donor in top_donors %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ donor.donor_name }}</td>
+            <td>{{ donor.total_donated }}</td>
+            <td>{{ donor.reward_level }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+  </section>
+{% endblock body %}
+
+
+

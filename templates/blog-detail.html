@@ -1,0 +1,33 @@
+<!-- templates/blog-detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Detail</title>
+</head>
+<body>
+    <div id="blog-detail"></div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const blogId = params.get("id");
+
+        if (blogId) {
+            fetch(`/api/blogs/${blogId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("blog-detail").innerHTML = `
+                        <h2>${data.title}</h2>
+                        <img src="${data.image}" alt="${data.title}" width="300">
+                        <p>${data.content}</p>
+                        <a href="/">← Back to Home</a>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById("blog-detail").innerHTML = "<p>Error loading blog.</p>";
+                });
+        } else {
+            document.getElementById("blog-detail").innerHTML = "<p>Blog ID not provided.</p>";
+        }
+    </script>
+</body>
+</html>

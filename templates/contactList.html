@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+  Contact
+{% endblock title %}
+
+{% block content %}
+
+{% endblock content %}
+ {% block body%}
+{% load static %}
+<link  href="{% static 'conTable.css' %}" rel="stylesheet">
+<section>
+   
+<table id="contactview">
+    
+    <thead>
+        <h1>Contact List</h1>
+        <tr>
+            <th> Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tbody>
+            {% for contact in contact_data %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.message }}</td>
+                    <td>
+                        <a href="#">Edit</a> | <a href="#">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        
+       
+    </tbody>
+</table>
+</section> <br> <br> <br><br>
+
+
+{% endblock body%}
