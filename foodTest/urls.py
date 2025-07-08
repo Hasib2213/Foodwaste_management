@@ -23,6 +23,7 @@ urlpatterns = [
      path('api/blogs/<int:pk>/', BlogDetailAPIView.as_view(), name='blog-detail'),
     path('blog-detail/', views.blog_detail_template, name='blog-detail-page'),
 
+path('blogs/', views.blog_list_template, name='blog-list-page'),
 
 
 ]

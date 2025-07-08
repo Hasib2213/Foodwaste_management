@@ -211,3 +211,7 @@ class BlogDetailAPIView(generics.RetrieveAPIView):
 
 def blog_detail_template(request):
     return render(request, 'blog-detail.html')
+
+#for blog list
+def blog_list_template(request):
+    return render(request, 'blog-list.html')

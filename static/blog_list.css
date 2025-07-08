@@ -1,0 +1,100 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Light Mode Colors */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #212529;
+    --title-color: #343a40;
+    --btn-bg: #6c757d;
+    --btn-text: #ffffff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --text-color: #e0e0e0;
+        --title-color: #ffffff;
+        --btn-bg: #17a2b8;
+        --btn-text: #ffffff;
+        --shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Body Styling */
+body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Page Heading */
+h2 {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--title-color);
+}
+
+/* Responsive Grid */
+#blog-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Blog Card */
+.blog-card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Blog Title */
+.blog-title {
+    font-size: 1.3rem;
+    color: var(--title-color);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Blog Image */
+.blog-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Button */
+.blog-card .btn-secondary {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.blog-card .btn-secondary:hover {
+    background-color: #495057;
+    color: #fff;
+}
