@@ -10,6 +10,14 @@ from .models import Donation,contact,DonorProfile,Blog
 from .serializers import DonationSerializer,ContactSerializer,BlogSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth.decorators import login_required
+
+from datetime import datetime, timedelta
+from .models import Inventory
+from .forms import InventoryForm
+from django.core.mail import send_mail
+from django.contrib.auth.decorators import user_passes_test
+
 
 
 class DonationListCreateView(generics.ListCreateAPIView):
@@ -22,7 +30,7 @@ class DonationRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DonationSerializer
 
 
-
+@login_required
 def submission_view(request):
     if request.method == "POST":
         donor_name = request.POST.get("donor_name")
@@ -55,7 +63,7 @@ def submission_view(request):
 
     return render(request, "donation_form.html")
 
-
+@login_required
 def donation_view(request):
     response=requests.get("http://127.0.0.1:8000/api/donations/")
     data=response.json()
@@ -64,6 +72,7 @@ def donation_view(request):
 
 
 # working for update and delete for food donations
+@login_required
 def edit_donation(request, pk):
     donation = get_object_or_404(Donation, id=pk)
     
@@ -83,7 +92,7 @@ def edit_donation(request, pk):
 
     return render(request, "edit_donation.html", {"donation": donation})
 
-
+@login_required
 # Delete Donation View
 def delete_donation(request, pk):
     donation = get_object_or_404(Donation, id=pk)
@@ -151,7 +160,7 @@ def update_donor_profiles():
         donor_profile.save()
 
 
-
+@login_required
 def leaderboard_view(request):
     update_donor_profiles()
     top_donors = DonorProfile.objects.order_by("-total_donated")[:10]  # Get top 10 donors
@@ -170,14 +179,14 @@ class Contactupdate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ContactSerializer
 
 
-
+@login_required
 def contact_view(request):
     response=requests.get("http://127.0.0.1:8000/api/contact/")
     data=response.json()
     return render(request,'contactList.html',{'contact_data': data})
 
 
-
+@login_required
 def contact_sub(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -208,10 +217,46 @@ class BlogListAPIView(generics.ListAPIView):
 class BlogDetailAPIView(generics.RetrieveAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer 
-
+@login_required
 def blog_detail_template(request):
     return render(request, 'blog-detail.html')
 
 #for blog list
+@login_required
 def blog_list_template(request):
     return render(request, 'blog-list.html')
+
+
+
+
+#for real time alart purpose
+@user_passes_test(lambda u: u.is_superuser)
+def alert_dashboard(request):
+    today = datetime.today().date()
+    soon = today + timedelta(days=3)
+
+    low_quantity_items = Inventory.objects.filter(quantity__lt=5)
+    near_expiry_items = Inventory.objects.filter(expiry_date__lte=soon, expiry_date__gte=today)
+
+    return render(request, 'dashboard.html', {
+        'low_quantity_items': low_quantity_items,
+        'near_expiry_items': near_expiry_items
+    })
+
+
+#add inventory
+@login_required
+def add_inventory(request):
+    if request.method == 'POST':
+        form = InventoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory-success')
+    else:
+        form = InventoryForm()
+    
+    return render(request, 'add_inventory.html', {'form': form})
+
+
+def inventory_success(request):
+    return render(request, 'success.html')

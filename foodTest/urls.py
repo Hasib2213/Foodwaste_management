@@ -25,5 +25,10 @@ urlpatterns = [
 
 path('blogs/', views.blog_list_template, name='blog-list-page'),
 
+# real time alert
+path('alerts/', views.alert_dashboard, name='alert-dashboard'),
+# Add Inventory
+path('add/', views.add_inventory, name='add-inventory'),
+    path('success/', views.inventory_success, name='inventory-success'),
 
 ]

@@ -1,0 +1,95 @@
+<!-- templates/alerts/dashboard.html -->
+{% extends "base.html" %}
+{% block title %}Inventory Alerts{% endblock %}
+
+{% block body %}
+
+<style>
+    body {
+        background-color: #f4f6f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2.text-danger {
+        font-weight: bold;
+        font-size: 2rem;
+    }
+
+    h4 {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .list-group-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: #fff;
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: #fff8e1;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.5em 0.75em;
+        border-radius: 12px;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    p {
+        color: #777;
+        font-style: italic;
+    }
+
+    .mb-4 {
+        padding: 20px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4 text-danger">📢 Real-time Inventory Alerts</h2>
+
+    <div class="mb-4">
+        <h4>⚠️ Low Quantity Items (less than 5)</h4>
+        {% if low_quantity_items %}
+            <ul class="list-group">
+                {% for item in low_quantity_items %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        {{ item.name }} - {{ item.quantity }} left
+                        <span class="badge bg-warning text-dark">Low Stock</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No low quantity items.</p>
+        {% endif %}
+    </div>
+
+    <div class="mb-4">
+        <h4>⏰ Items Expiring Soon (within 3 days)</h4>
+        {% if near_expiry_items %}
+            <ul class="list-group">
+                {% for item in near_expiry_items %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        {{ item.name }} - Expires on {{ item.expiry_date }}
+                        <span class="badge bg-danger">Expiring Soon</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No items nearing expiry.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

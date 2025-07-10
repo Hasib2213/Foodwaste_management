@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .signup-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-container h2 {
+        margin-bottom: 25px;
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .signup-container .form-control {
+        margin-bottom: 15px;
+    }
+
+    .signup-container button {
+        width: 100%;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="signup-container">
+        <h2 class="text-center">Sign Up</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success" type="submit">Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

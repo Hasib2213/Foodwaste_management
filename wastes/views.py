@@ -5,6 +5,7 @@ from .models import InventoryItem, FoodDonation, Reward, SustainabilityMetrics, 
 from datetime import datetime, timedelta
 
 # Home Page
+@login_required
 def index(request):
     return render(request, 'index.html')
 
