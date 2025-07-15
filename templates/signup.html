@@ -5,25 +5,70 @@
 <style>
     .signup-container {
         max-width: 500px;
-        margin: 0 auto;
+        margin: 2px auto;
         padding: 30px;
-        background-color: #f8f9fa;
-        border-radius: 12px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(6px);
+        border-radius: 15px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        color: white;
     }
 
     .signup-container h2 {
-        margin-bottom: 25px;
+        margin-bottom: 2px;
         font-weight: 600;
-        color: #343a40;
+        color: #ffffff;
+        text-align: center;
     }
 
     .signup-container .form-control {
+        background: rgba(255, 255, 255, 0.12);
+        border: none;
+        border-radius: 8px;
+        color: white;
         margin-bottom: 15px;
+    }
+
+    .signup-container .form-control:focus {
+        background: rgba(17, 16, 16, 0.2);
+        color: white;
+        box-shadow: none;
+        outline: none;
     }
 
     .signup-container button {
         width: 100%;
+        padding: 10px;
+        background-color: #00b894;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .signup-container button:hover {
+        background-color: #019875;
+    }
+
+    .alert {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+        border: none;
+        border-radius: 6px;
+    }
+
+    /* Force white text for Django-generated fields */
+    .signup-container label {
+        color: #f1f1f1;
+    }
+
+    /* Optional: better spacing on mobile */
+    @media (max-width: 576px) {
+        .signup-container {
+            padding: 20px;
+        }
     }
 </style>
 

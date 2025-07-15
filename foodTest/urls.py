@@ -30,5 +30,12 @@ path('alerts/', views.alert_dashboard, name='alert-dashboard'),
 # Add Inventory
 path('add/', views.add_inventory, name='add-inventory'),
     path('success/', views.inventory_success, name='inventory-success'),
+    #receiver information
+   path('received/<int:donation_id>/', views.mark_received, name='mark-received'),
+    path('receiver-dashboard/', views.receiver_dashboard, name='receiver-dashboard'),
+
+    #chart for waste management
+      path('received-chart/', views.received_chart_view, name='received-chart'),
+    path('api/food-received-chart/', views.food_received_chart_api, name='food-received-chart-api'),
 
 ]

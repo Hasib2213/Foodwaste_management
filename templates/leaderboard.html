@@ -10,27 +10,55 @@
 
 {% block body %}
 {% load static %}
-<link  href="{% static 'leader.css' %}" rel="stylesheet">
-  <section>
-    <h2 style="text-align: center;">🏆 Top Donors Leaderboard 🏆</h2>
-    <table>
-        {% csrf_token %}
-        <tr>
-            <th>Rank</th>
-            <th>Donor Name</th>
-            <th>Total Donated (kg)</th>
-            <th>Reward Level</th>
-        </tr>
-        {% for donor in top_donors %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ donor.donor_name }}</td>
-            <td>{{ donor.total_donated }}</td>
-            <td>{{ donor.reward_level }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-  </section>
+
+<section style="
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(2px);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin: 5px auto;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+">
+  <h2 style="color: #0a3d62; font-size: 28px; margin-bottom: 25px;">
+    🏆 Top Donors Leaderboard 🏆
+  </h2>
+  <table style="
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 16px;
+      background-color: transparent;
+      overflow: hidden;
+      border-radius: 12px;
+  ">
+    <tr style="background-color: #0a3d62; color: white;">
+      <th style="padding: 12px; border-top-left-radius: 12px;">Rank</th>
+      <th style="padding: 12px;">Donor Name</th>
+      <th style="padding: 12px;">Total Donated (kg)</th>
+      <th style="padding: 12px; border-top-right-radius: 12px;">Reward Level</th>
+    </tr>
+    {% for donor in top_donors %}
+    <tr style="
+        background-color: {% if forloop.counter0|divisibleby:2 %}rgba(255,255,255,0.8){% else %}rgba(240,248,255,0.8){% endif %};
+        transition: background-color 0.3s;
+    "
+        onmouseover="this.style.backgroundColor='rgba(7, 7, 7, 0.15)'"
+        onmouseout="this.style.backgroundColor='{% if forloop.counter0|divisibleby:2 %}rgba(255,255,255,0.8){% else %}rgba(137, 141, 145, 0.35){% endif %}'"
+    >
+      <td style="padding: 10px; {% if forloop.last %}border-bottom-left-radius: 12px;{% endif %}">{{ forloop.counter }}</td>
+      <td style="padding: 10px;">{{ donor.donor_name }}</td>
+      <td style="padding: 10px;">{{ donor.total_donated }}</td>
+      <td style="padding: 10px; {% if forloop.last %}border-bottom-right-radius: 12px;{% endif %}">{{ donor.reward_level }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+
+
 {% endblock body %}
 
 

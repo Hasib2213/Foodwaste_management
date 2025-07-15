@@ -9,140 +9,154 @@
     <link href="{% static 'styles.css' %}" rel="stylesheet">
 
     <style>
-        /* Prevent horizontal overflow */
-        * {
-            box-sizing: border-box;
-        }
+     .main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1px);
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin: 100px auto;
+    width: 95%;
+    max-width: 1250px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    text-align: center;
+}
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            height: 100%;
-        }
+/* Table Design */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin-top: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+}
 
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+/* Table Header */
+th {
+    background-color: rgba(0, 0, 0, 0.48);
+    color: #ffffff;
+    font-weight: bold;
+    padding: 15px 12px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+}
 
-        .main-content {
-            flex: 1;
-            padding-top: 80px;
-            padding-bottom: 30px;
-        }
+/* Table Rows */
+tr {
+    background-color: rgba(56, 48, 48, 0.29);
+    transition: background-color 0.3s ease;
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+tr:nth-child(even) {
+    background-color: rgba(148, 133, 133, 0.34);
+}
 
-        table {
-            width: 95%;
-            max-width: 1200px;
-            margin: auto;
-            border-collapse: collapse;
-            background-color: white;
-        }
+tr:hover {
+    background-color: rgba(0, 0, 0, 0.37);
+}
 
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: center;
-        }
+/* Table Cells */
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 0.95em;
+}
 
-        th {
-            background-color: #f2f2f2;
-        }
+/* Action Links */
+a {
+    color: #1e90ff;
+    font-weight: 600;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffcc00;
+}
 
-        tr:hover {
-            background-color: #ddd;
-        }
+/* Button refinement */
+.btn-success {
+    background-color: rgba(40, 167, 69, 0.85);
+    border: none;
+    font-weight: 600;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
 
-        a {
-            text-decoration: none;
-            color: blue;
-            font-weight: bold;
-        }
-
-        a:hover {
-            color: red;
-        }
-
-        /* Navbar fix */
-        .navbar {
-            z-index: 1000;
-        }
-
-        /* Responsive table */
-        @media (max-width: 768px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            thead {
-                display: none;
-            }
-
-            tr {
-                margin-bottom: 15px;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                background-color: #fff;
-            }
-
-            td {
-                padding-left: 50%;
-                position: relative;
-                text-align: left;
-                border: none;
-                border-bottom: 1px solid #eee;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 10px;
-                font-weight: bold;
-                white-space: nowrap;
-            }
-        }
-
-        /* Footer always at bottom */
-        footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-        }
+.btn-success:hover {
+    background-color: rgba(40, 167, 69, 1);
+}
     </style>
+
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Food Waste Management</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">EcoPlate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contactsub">Contact</a></li>
-                   <!--   <li class="nav-item"><a class="nav-link" href="/contactview">ContactView</a></li>   -->
-                    <li class="nav-item"><a class="nav-link" href="/Vsub">Donate</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Vdon">ViewDonor</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/leaderboard">Leaderboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+                     
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+    <a class="nav-link" href="{% url 'add-inventory' %}">Add Inventory</a>
+</li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contactsub">Contact</a>
+                    </li>
+
+<!-- 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contactview">ContactView</a>
+                    </li>
+-->
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Vsub">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Vdon">ViewDoner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/leaderboard">leaderboard</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'received-chart' %}">📈 Stats</a></li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blogs">Blog</a>
+                    </li>
+                    <li class="nav-item">
+    <a class="nav-link" href="{% url 'alert-dashboard' %}">Alerts</a>
+</li>
+                    {% if user.is_authenticated %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'signout' %}">Sign Out</a></li>
+{% else %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'signin' %}">Sign In</a></li>
+{% endif %}
+
+                    
                 </ul>
             </div>
         </div>
@@ -178,7 +192,8 @@
                     <td data-label="Special Note">{{ donation.special_note }}</td>
                     <td data-label="Actions">
                         <a href="{% url 'edit-donation' donation.id %}">Edit</a> |
-                        <a href="{% url 'delete-donation' donation.id %}">Delete</a>
+                        <a href="{% url 'delete-donation' donation.id %}">Delete</a> |
+                        <a href="{% url 'mark-received' donation.id %}" class="btn btn-success btn-sm">Receive</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -188,7 +203,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Food Waste Management System. All Rights Reserved.</p>
+        <p>&copy; 2025 EcoPlate. All Rights Reserved.</p>
     </footer>
 
     <!-- JS -->

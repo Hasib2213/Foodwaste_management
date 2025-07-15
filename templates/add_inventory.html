@@ -3,72 +3,93 @@
 {% block title %}Add Inventory{% endblock %}
 
 {% block body %}
+
+
 <style>
-    body {
-        background-color: #f7f9fc;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    color: white;
+}
 
-    h2 {
-        font-weight: 600;
-        color: #123d69;
-        text-align: center;
-    }
+/* Title */
+h2 {
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-    form {
-        background-color: #ffffff;
-        padding: 25px 30px;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
+/* Glass-style form */
+form {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    color: white;
+}
 
-    form p {
-        margin-bottom: 20px;
-    }
+/* Form paragraph spacing */
+form p {
+    margin-bottom: 20px;
+}
 
-    form label {
-        font-weight: 500;
-        display: block;
-        margin-bottom: 5px;
-        color: #34495e;
-    }
+/* Labels */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    color: #f1f1f1;
+}
 
-    form input,
-    form select,
-    form textarea {
-        width: 100%;
-        padding: 10px 14px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: #fdfdfd;
-        transition: border-color 0.3s;
-    }
+/* Input styling */
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: white;
+    transition: background 0.3s, box-shadow 0.3s;
+}
 
-    form input:focus,
-    form select:focus,
-    form textarea:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
-    }
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
 
-    .btn-primary {
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        background-color: #007bff;
-        border: none;
-        transition: background-color 0.3s;
-    }
+/* Submit button */
+.btn-primary {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: #00b894;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
+.btn-primary:hover {
+    background-color: #019875;
+}
 
-    .container {
-        max-width: 600px;
-    }
+/* Container width */
+.container {
+    max-width: 600px;
+}
 </style>
+
+
+
+
 
 <div class="container mt-5">
     <h2 class="mb-4">➕ Add Inventory Item</h2>

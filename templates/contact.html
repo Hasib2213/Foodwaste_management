@@ -1,51 +1,70 @@
-
 {% extends "base.html" %}
 
 {% block title %}
   Contact
 {% endblock title %}
-
 {% block content %}
 {% endblock content %}
-
 {% block body %}
-
 {% load static %}
 
- <!-- Contact Section -->
-<section id="contact" class="bg-light py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Contact Us</h2>
+<!-- Contact Section -->
+<section id="contact" class="py-5" style="background: url('{% static "your-background.jpg" %}') no-repeat center center/cover; min-height: 100vh;">
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="form-box w-100" style="max-width: 500px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(12px); padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); color: white;">
 
-        <!-- Display success or error messages -->
-       <!--- {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-success">{{ message }}</div>
-            {% endfor %}
-        {% endif %}-->
 
-        <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Message</label>
-                <textarea class="form-control" id="message" name="message" rows="3" placeholder="Your Message" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+      <h2 class="text-center mb-4 text-white">Contact Us</h2>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="name" class="form-label text-white">Name</label>
+          <input type="text" class="form-control bg-transparent text-white border-light" id="name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label text-white">Email</label>
+          <input type="email" class="form-control bg-transparent text-white border-light" id="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label text-white">Message</label>
+          <textarea class="form-control bg-transparent text-white border-light" id="message" name="message" rows="3" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-light w-100 fw-bold">Submit</button>
+      </form>
+
+
+  <style>
+/* Force custom background and text color for inputs */
+form .form-control {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Placeholder color */
+form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Focus style */
+form .form-control:focus {
+  background-color: rgba(94, 91, 91, 0.88) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+</style>
+
+
+
     </div>
+  </div>
 </section>
+
 
  
 {% endblock body %}
-   
-
-   
-

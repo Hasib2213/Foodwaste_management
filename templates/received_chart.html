@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Food Received Trend{% endblock %}
+
+{% block body %}
+
+<style>
+    .chart-container {
+        background-color: #f4f9f4;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-top: 40px;
+    }
+
+    .chart-container h2 {
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .impact-section {
+        background-color: #eaf7ea;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 40px;
+        box-shadow: 0 2px 6px rgba(0, 128, 0, 0.1);
+    }
+
+    .impact-section h5 {
+        font-weight: 600;
+        color: #155724;
+    }
+
+    .impact-section ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .impact-section li {
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .impact-section strong {
+        color: #1c5d1c;
+    }
+</style>
+
+<div class="container chart-container">
+    <h2 class="text-center">📊 Food Received Over Time</h2>
+    <canvas id="receivedChart" height="100"></canvas>
+
+    <div class="impact-section mt-5">
+        <h5>Sustainability Impact</h5>
+        <ul>
+    <li><strong>Total Food Saved:</strong> <span id="total-food">Calculating...</span></li>
+    <li><strong>Estimated Meals Saved:</strong> <span id="total-meals">Calculating...</span></li>
+    <li><strong>CO₂ Emissions Prevented:</strong> <span id="total-co2">Calculating...</span></li>
+</ul>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/api/food-received-chart/')
+        .then(response => response.json())
+        .then(data => {
+            const ctx = document.getElementById('receivedChart').getContext('2d');
+
+            // Chart rendering
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Food Received (kg)',
+                        data: data.data,
+                        borderColor: 'green',
+                        backgroundColor: 'rgba(0, 128, 0, 0.2)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Food Received Trend Over Time',
+                            font: {
+                                size: 18
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantity (kg)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 👇 Dynamic Sustainability Impact Calculation
+            const totalKg = data.data.reduce((acc, val) => acc + val, 0);
+            const totalMeals = (totalKg * 2.5).toFixed(1);
+            const totalCO2 = (totalKg * 2).toFixed(1);
+
+            // Insert values into the DOM
+            document.getElementById("total-food").textContent = totalKg.toFixed(1) + " kg";
+            document.getElementById("total-meals").textContent = totalMeals + " meals";
+            document.getElementById("total-co2").textContent = totalCO2 + " kg CO₂";
+
+        })
+        .catch(error => {
+            console.error('Chart load error:', error);
+        });
+});
+</script>
+
+
+{% endblock %}

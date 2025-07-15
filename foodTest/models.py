@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -12,9 +13,15 @@ class Donation(models.Model):
     food_preparation_date = models.DateField()
     special_note = models.TextField(blank=True, null=True)
     accept_terms = models.BooleanField(default=False)
+    #new added fields for tracking
+    received_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    received_at = models.DateTimeField(null=True, blank=True)
+    
 
     def __str__(self):
-        return self.donor_name
+        return f"{self.donor_name} - {self.food_category}"
+
+   
 
 
 class contact(models.Model):

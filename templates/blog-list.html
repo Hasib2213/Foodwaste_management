@@ -6,29 +6,209 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{% static 'blog_list.css' %}" rel="stylesheet">
 
- 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('/static/img/back1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.60);
+            z-index: -1;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 40px;
+        }
+
+        .page-header h2 {
+            color: #fff;
+            font-weight: 700;
+            font-size: 36px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 20px;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .blog-card img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .blog-excerpt {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: #ddd;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff22;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ffffff44;
+            color: #fff;
+        }
+
+        /* navbar */
+.nav-link {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: all 0.9s ease;
+  border-radius: 4px;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: red;
+}
+
+.nav-item:hover .nav-link {
+ color: black !important;                /* Text becomes black */
+  background-color: #f5f5f5;  /* Light white background */
+}
+
+.nav-item:hover .nav-link::after {
+  width: 100%;
+}
+
+
+    </style>
 </head>
 <body>
-<div class="container my-5" id="blog-list">
-    <h2>Latest Blogs</h2>
-</div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EcoPlate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                     
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#feature">Features</a>
+                    </li>
+                    <li class="nav-item">
+    <a class="nav-link" href="{% url 'add-inventory' %}">Add Inventory</a>
+</li>
 
-<script>
-    fetch('/api/blogs/')
-    .then(res => res.json())
-    .then(data => {
-        const blogList = document.getElementById('blog-list');
-        data.forEach(blog => {
-            blogList.innerHTML += `
-                <div class="blog-card mb-4">
-    <h4 class="blog-title">${blog.title}</h4>
-    <img src="${blog.image}" alt="${blog.title}">
-    <a href="/blog-detail/?id=${blog.id}" class="btn btn-secondary mt-2">Read More</a>
-</div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contactsub">Contact</a>
+                    </li>
 
-            `;
+<!-- 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contactview">ContactView</a>
+                    </li>
+-->
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Vsub">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Vdon">ViewDoner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/leaderboard">Leaderboard</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'received-chart' %}">📈 Stats</a></li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blogs">Blog</a>
+                    </li>
+                    <li class="nav-item">
+    <a class="nav-link" href="{% url 'alert-dashboard' %}">Alerts</a>
+</li>
+                    {% if user.is_authenticated %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'signout' %}">Sign Out</a></li>
+{% else %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'signin' %}">Sign In</a></li>
+{% endif %}
+
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Latest Blogs</h2>
+        </div>
+        <div class="blog-grid" id="blog-list"></div>
+    </div>
+     <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 EcoPlate. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        fetch('/api/blogs/')
+        .then(res => res.json())
+        .then(data => {
+            const blogList = document.getElementById('blog-list');
+            data.forEach(blog => {
+                blogList.innerHTML += `
+                    <div class="blog-card">
+                        <h4 class="blog-title">${blog.title}</h4>
+                        <img src="${blog.image}" alt="${blog.title}">
+                        <p class="blog-excerpt">${blog.content ? blog.content.slice(0, 120) + '...' : ''}</p>
+                        <a href="/blog-detail/?id=${blog.id}" class="btn btn-secondary mt-2">Read More</a>
+                    </div>
+                `;
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>

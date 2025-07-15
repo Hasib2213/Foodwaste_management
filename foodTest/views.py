@@ -3,6 +3,9 @@ import requests
 from django.http import JsonResponse
 import json
 from django.db.models import Sum
+from django.utils import timezone
+from django.db.models.functions import TruncDate
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 from rest_framework import generics
@@ -53,7 +56,8 @@ def submission_view(request):
             quantity=quantity,
             food_preparation_date=food_preparation_date,
             special_note=special_note,
-            accept_terms=accept_terms
+            accept_terms=accept_terms,
+            
         )
 
         # Update all donor profiles
@@ -65,9 +69,16 @@ def submission_view(request):
 
 @login_required
 def donation_view(request):
-    response=requests.get("http://127.0.0.1:8000/api/donations/")
+    food_waste_data = Donation.objects.filter(received_by__isnull=True)
+    return render(request, 'donation_list.html', {'food_waste_data': food_waste_data})
+    '''donations = Donation.objects.all()
+    return render(request, 'donation_list.html', {'food_waste_data': donations})'''
+
+
+    '''response=requests.get("http://127.0.0.1:8000/api/donations/")
+    
     data=response.json()
-    return render(request,'donation_list.html',{'food_waste_data': data})
+    return render(request,'donation_list.html',{'food_waste_data': data})'''
 
 
 
@@ -75,6 +86,10 @@ def donation_view(request):
 @login_required
 def edit_donation(request, pk):
     donation = get_object_or_404(Donation, id=pk)
+
+
+    # 👇 Restrict access
+    
     
     if request.method == "POST":
         donation.donor_name = request.POST.get("donor_name")
@@ -96,6 +111,9 @@ def edit_donation(request, pk):
 # Delete Donation View
 def delete_donation(request, pk):
     donation = get_object_or_404(Donation, id=pk)
+
+
+  
     
     if request.method == "POST":
         donation.delete()
@@ -186,7 +204,7 @@ def contact_view(request):
     return render(request,'contactList.html',{'contact_data': data})
 
 
-@login_required
+#@login_required
 def contact_sub(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -209,7 +227,7 @@ def contact_sub(request):
 #blog post
 
 class BlogListAPIView(generics.ListAPIView):
-    queryset = Blog.objects.all().order_by('-created_at')[:3]  # Latest 3 blogs
+    queryset = Blog.objects.all().order_by('-created_at')[:5]  # Latest 3 blogs
     serializer_class = BlogSerializer
 
 
@@ -217,12 +235,12 @@ class BlogListAPIView(generics.ListAPIView):
 class BlogDetailAPIView(generics.RetrieveAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer 
-@login_required
+
 def blog_detail_template(request):
     return render(request, 'blog-detail.html')
 
 #for blog list
-@login_required
+
 def blog_list_template(request):
     return render(request, 'blog-list.html')
 
@@ -230,7 +248,8 @@ def blog_list_template(request):
 
 
 #for real time alart purpose
-@user_passes_test(lambda u: u.is_superuser)
+#@user_passes_test(lambda u: u.is_superuser)
+@login_required
 def alert_dashboard(request):
     today = datetime.today().date()
     soon = today + timedelta(days=3)
@@ -260,3 +279,54 @@ def add_inventory(request):
 
 def inventory_success(request):
     return render(request, 'success.html')
+
+
+
+
+#receiver information
+@login_required
+def mark_received(request, donation_id):
+    donation = get_object_or_404(Donation, id=donation_id)
+    donation.received_by = request.user
+    donation.received_at = timezone.now()
+    donation.save()
+    return redirect('receiver-dashboard')
+
+
+
+@login_required
+def receiver_dashboard(request):
+    received_donations = Donation.objects.filter(received_by=request.user)
+    total_received_by_user = received_donations.aggregate(Sum('quantity'))['quantity__sum'] or 0
+
+    total_received_all_users = Donation.objects.exclude(received_by=None).aggregate(Sum('quantity'))['quantity__sum'] or 0
+
+    context = {
+        'receiver_email': request.user.email,
+        'donations': received_donations,
+        'total_received_by_user': total_received_by_user,
+        'total_received_all_users': total_received_all_users
+    }
+    return render(request, 'receiver_dashboard.html', context)
+
+
+
+#chart for waste management
+def food_received_chart_api(request):
+    data = (
+        Donation.objects
+        .filter(received_by__isnull=False)
+        .annotate(date=TruncDate('received_at'))
+        .values('date')
+        .annotate(total=Sum('quantity'))
+        .order_by('date')
+    )
+    response = {
+        "labels": [entry["date"].strftime("%Y-%m-%d") for entry in data],
+        "data": [entry["total"] for entry in data]
+    }
+    return JsonResponse(response)
+
+@login_required
+def received_chart_view(request):
+    return render(request, 'received_chart.html')

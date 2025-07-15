@@ -9,7 +9,36 @@
     <title>Food Waste Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--<link rel="stylesheet" href="{% static '/styles.css'% } "> -->
-    <link href="{% static 'styles.css' %}" rel="stylesheet"> 
+    <link href="{% static 'styles.css' %}" rel="stylesheet">
+<style>
+.nav-link {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: all 0.9s ease;
+  border-radius: 4px;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: red;
+}
+
+.nav-item:hover .nav-link {
+ color: black !important;                /* Text becomes black */
+  background-color: #f5f5f5;  /* Light white background */
+}
+
+.nav-item:hover .nav-link::after {
+  width: 100%;
+}
+</style>
 
 </head>
 <body>
@@ -18,7 +47,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Food Waste Management</a>
+            <a class="navbar-brand" href="#">EcoPlate</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,7 +58,7 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
+                        <a class="nav-link" href="/#feature">Features</a>
                     </li>
                     <li class="nav-item">
     <a class="nav-link" href="{% url 'add-inventory' %}">Add Inventory</a>
@@ -53,8 +82,11 @@
                         <a class="nav-link" href="/Vdon">ViewDoner</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/leaderboard">leaderboard</a>
+                        <a class="nav-link" href="/leaderboard">Leaderboard</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'received-chart' %}">📈 Stats</a></li>
+
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="/blogs">Blog</a>
@@ -79,9 +111,10 @@
    <section id="home" class="bg-light py-5 text-center"> 
         
         <div class="container">
-            <h1 class="display-4">Welcome to Food Waste Management</h1>
-            <p class="lead">Helping you reduce food waste and feed those in need.</p>
-           <!--<a href="#features" class="btn btn-primary">Explore Features</a> -->
+            <h1 class="display-4">Welcome to EcoPlate</h1>
+            <p class="lead">A Web-based Food Waste Management System.</p>
+            <p class="lead">Efficiency In Every Plate</p>
+           
         </div>
     </section> 
 
@@ -100,7 +133,7 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2025 Food Waste Management System. All Rights Reserved.</p>
+        <p>&copy; 2025 EcoPlate . All Rights Reserved.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
