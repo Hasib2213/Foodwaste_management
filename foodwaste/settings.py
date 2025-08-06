@@ -65,7 +65,7 @@ ROOT_URLCONF = 'foodwaste.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],
+        'DIRS': [BASE_DIR / 'templates'],  # ✅ fixed path
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
